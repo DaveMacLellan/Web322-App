@@ -1,0 +1,14 @@
+iframe {
+    display: block;
+    margin: 0 auto;
+}
+
+.navbar-default {
+    background-color: lime;
+    border-color: black;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: lime;
+    background-color: black;
+}
