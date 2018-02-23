@@ -67,3 +67,55 @@ module.exports.getDepartments =  function(){
         }
     });
 }
+
+module.exports.addEmployee = function(employeeData){
+    return new Promise(function(resolve, reject){
+        if(employeeData.isManager == null){
+            employeeData.isManager = false;
+            employeeData.employeeNum = employees.length + 1;
+            employees.push(employeeData);
+            resolve(employees);
+        }else{
+            employeeData.isManager = true;
+            employeeData.employeeNum = employees.length + 1;
+            employees.push(employeeData);
+            resolve(employees);
+        }
+    });
+}
+
+module.exports.getEmployeesByStatus = function(status){
+    return new Promise(function(resolve, reject){
+        var statusEmployees = [];
+        for(var i = 0; i < employees.length; i++){
+            if(employees[i].status == status){
+                statusEmployees.push(employees[i]);
+                //console.log(employees[i].status);
+            }
+        }
+        if(statusEmployees.length == 0){
+            reject("Nothing found");
+        }
+        else{
+            resolve(statusEmployees);
+        }
+    });
+}
+
+module.exports.getEmployeesByDepartment = function(department){
+    return new Promise(function(resolve, reject){
+    
+    });
+}
+
+module.exports.getEmployeesByManager = function(manager){
+    return new Promise(function(resolve, reject){
+    
+    });
+}
+
+module.exports.getEmployeesByNum = function(num){
+    return new Promise(function(resolve, reject){
+    
+    });
+}
