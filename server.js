@@ -1,10 +1,10 @@
 /*********************************************************************************
-* WEB322 – Assignment 02
+* WEB322 – Assignment 03
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. No part
 * of this assignment has been copied manually or electronically from any other source
 * (including 3rd party web sites) or distributed to other students.
 *
-* Name: Dave MacLellan Student ID: 134463165 Date: 02/08/18
+* Name: Dave MacLellan Student ID: 134463165 Date: 02/22/18
 *
 * Online (Heroku) Link: https://mysterious-thicket-30317.herokuapp.com/
 *
@@ -46,36 +46,47 @@ app.get("/about", function(req, res){
     res.sendFile(path.join(__dirname + "/views/about.html"));
 });
 
+app.get("/employees/add", function(req,res){
+    res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
+});
+
+app.post("/employees/add", function(req, res){
+    data.addEmployee(req.body)
+    .then(function(data){
+        res.redirect("/employees")
+    })
+    .catch(function(err){
+        res.send(err);
+    })
+});
+
 app.get("/employees", function(req, res){
     if(req.query.status){
         data.getEmployeesByStatus(req.query.status)
-        .then(function(status){
-            res.json(status);
+        .then(function(data){
+            res.json(data);
         })
         .catch(function(err){
             res.send(err);
         })
-        //json.stringify(status);
     }
     else if(req.query.department){
-        data.getEmployeesByStatus(department)
-        .then(function(department){
-            res.json(department);
+        data.getEmployeesByDepartment(req.query.department)
+        .then(function(data){
+            res.json(data);
         })
         .catch(function(err){
             res.send(err);
         })
-        //json.stringify(department);
     }
     else if(req.query.manager){
-        data.getEmployeesByStatus(manager)
-        .then(function(manager){
-            res.json(manager);
+        data.getEmployeesByManager(req.query.manager)
+        .then(function(data){
+            res.json(data);
         })
         .catch(function(err){
             res.send(err);
         })
-        //json.stringify(manager);
     }
     else{
         data.getAllEmployees()
@@ -86,6 +97,16 @@ app.get("/employees", function(req, res){
             res.send(err);
         })
     }    
+});
+
+app.get("/employees/:num", function(req, res){
+    data.getEmployeesByNum(req.params.num)
+    .then(function(data){
+        res.json(data);
+    })
+    .catch(function(err){
+        res.send(err);
+    });
 });
 
 app.get("/managers", function(req, res){
@@ -104,20 +125,6 @@ app.get("/departments", function(req, res){
     data.getDepartments()
     .then(function(data){
         res.json(data);
-    })
-    .catch(function(err){
-        res.send(err);
-    })
-});
-
-app.get("/employees/add", function(req,res){
-    res.sendFile(path.join(__dirname + "/views/addEmployee.html"));
-});
-
-app.post("/employees/add", function(req, res){
-    data.addEmployee(req.body)
-    .then(function(data){
-        res.redirect("/employees")
     })
     .catch(function(err){
         res.send(err);

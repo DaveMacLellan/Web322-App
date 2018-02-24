@@ -104,18 +104,52 @@ module.exports.getEmployeesByStatus = function(status){
 
 module.exports.getEmployeesByDepartment = function(department){
     return new Promise(function(resolve, reject){
-    
+        var departmentList = [];
+        for(var i = 0; i < employees.length; i++){
+            if(employees[i].department == department){
+                departmentList.push(employees[i]);
+            }
+        }
+        if(departmentList.length == 0){
+            reject("Nothing found");
+        }
+        else{
+            resolve(departmentList);            
+        }
     });
 }
 
 module.exports.getEmployeesByManager = function(manager){
     return new Promise(function(resolve, reject){
-    
+        var managerList = [];
+        for(var i = 0; i < employees.length; i++){
+            if(employees[i].employeeManagerNum == manager){
+                managerList.push(employees[i]);
+            }
+        }
+        if(managerList.length == 0){
+            reject("Nothing found");
+        }
+        else{
+            resolve(managerList);
+            
+        }
     });
 }
 
 module.exports.getEmployeesByNum = function(num){
     return new Promise(function(resolve, reject){
-    
+        var employeeNumList = [];
+        for(var i = 0; i < employees.length; i++){
+            if(employees[i].employeeNum == num){
+                employeeNumList.push(employees[i]);
+            }
+        }
+        if(employeeNumList.length == 0){
+            reject("Nothing found");
+        }
+        else{
+            resolve(employeeNumList);            
+        }
     });
 }
